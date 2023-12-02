@@ -1,2 +1,46 @@
 mkdir MyQuoteBook
 cd MyQuoteBook
+
+echo "Quote 1 about happiness" > happiness.txt
+echo "Quote 2 about happiness" >> happiness.txt
+
+git init
+git add .
+git commit -m "Initial commit - added happiness.txt"
+
+echo "Quote 1 about humor" > humor.txt
+echo "Quote 2 about humor" >> humor.txt
+
+git add .
+git commit -m "Added humor.txt"
+
+echo "New quote about happiness" >> happiness.txt
+echo "New quote about humor" >> humor.txt
+git add .
+git commit -m "Made changes to both files"
+
+git revert HEAD
+
+git revert -n HEAD
+git commit -m "Reverted the revert"
+
+git reset --hard HEAD^
+
+git branch motivational-quotes
+
+echo "Motivational quote 1" > motivation_quotes.txt
+echo "Motivational quote 2" >> motivation_quotes.txt
+
+git add .
+git commit -m "Added motivational_quotes.txt"
+
+git checkout master
+
+git merge motivational-quotes
+
+git log
+
+git branch -d motivational-quotes
+
+git remote add origin <repository_url>
+git push -u origin master
