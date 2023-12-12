@@ -1,0 +1,142 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static Dictionary<string, List<Student>> phonebook = new Dictionary<string, List<Student>>();
+
+    static void Main()
+    {
+        while (true)
+        {
+            DisplayMenu();
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    StoreToPhonebook();
+                    break;
+                case "2":
+                    EditEntry();
+                    break;
+                case "3":
+                    SearchPhonebook();
+                    break;
+                case "4":
+                    Console.WriteLine("Exiting the ASEAN phonebook. Goodbye!");
+                    return;
+                default:
+                    Console.WriteLine("Invalid option. Please select a valid option (1-4).");
+                    break;
+            }
+        }
+    }
+
+    static void DisplayMenu()
+    {
+        Console.WriteLine("[1] Store to ASEAN phonebook");
+        Console.WriteLine("[2] Edit entry in ASEAN phonebook");
+        Console.WriteLine("[3] Search ASEAN phonebook by country");
+        Console.WriteLine("[4] Exit");
+    }
+
+    static void StoreToPhonebook()
+    {
+        Console.Write("Enter country: ");
+        string country = Console.ReadLine();
+        Console.Write("Enter student name: ");
+        string studentName = Console.ReadLine();
+        Console.Write("Enter phone number: ");
+        string phoneNumber = Console.ReadLine();
+
+        Student student = new Student(studentName, phoneNumber);
+
+        if (phonebook.ContainsKey(country))
+        {
+            phonebook[country].Add(student);
+        }
+        else
+        {
+            phonebook[country] = new List<Student> { student };
+        }
+
+        Console.WriteLine("Entry added successfully!");
+    }
+
+    static void EditEntry()
+    {
+        Console.Write("Enter country to edit entry: ");
+        string country = Console.ReadLine();
+
+        if (phonebook.ContainsKey(country))
+        {
+            Console.WriteLine($"Students in {country}:");
+            for (int i = 0; i < phonebook[country].Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {phonebook[country][i].Name} - {phonebook[country][i].Phone}");
+            }
+
+            try
+            {
+                Console.Write("Enter the number of the student to edit: ");
+                int selection = int.Parse(Console.ReadLine());
+
+                if (selection >= 1 && selection <= phonebook[country].Count)
+                {
+                    Console.Write("Enter new name: ");
+                    string newName = Console.ReadLine();
+                    Console.Write("Enter new phone number: ");
+                    string newPhone = Console.ReadLine();
+
+                    phonebook[country][selection - 1] = new Student(newName, newPhone);
+
+                    Console.WriteLine("Entry edited successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid selection.");
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid input. Please enter a number.");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"No entries found for {country}");
+        }
+    }
+
+    static void SearchPhonebook()
+    {
+        Console.Write("Enter country to search: ");
+        string country = Console.ReadLine();
+
+        if (phonebook.ContainsKey(country))
+        {
+            Console.WriteLine($"Students in {country}:");
+            for (int i = 0; i < phonebook[country].Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {phonebook[country][i].Name} - {phonebook[country][i].Phone}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"No entries found for {country}");
+        }
+    }
+}
+
+class Student
+{
+    public string Name { get; set; }
+    public string Phone { get; set; }
+
+    public Student(string name, string phone)
+    {
+        Name = name;
+        Phone = phone;
+    }
+}
