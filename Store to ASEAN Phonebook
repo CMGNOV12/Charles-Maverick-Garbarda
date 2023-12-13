@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        List<PhonebookEntry> phonebook = new List<PhonebookEntry>();
+
+        do
+        {
+            Console.Write("Enter student number: ");
+            string studentNumber = Console.ReadLine();
+
+            Console.Write("Enter surname: ");
+            string surname = Console.ReadLine();
+
+            Console.Write("Enter first name: ");
+            string firstName = Console.ReadLine();
+
+            Console.Write("Enter occupation: ");
+            string occupation = Console.ReadLine();
+
+            Console.Write("Enter gender (M for male, F for female): ");
+            char gender = char.ToUpper(Console.ReadLine()[0]);
+
+            Console.Write("Enter country code: ");
+            string countryCode = Console.ReadLine();
+
+            Console.Write("Enter area code: ");
+            string areaCode = Console.ReadLine();
+
+            Console.Write("Enter number: ");
+            string phoneNumber = Console.ReadLine();
+
+            PhonebookEntry entry = new PhonebookEntry(studentNumber, surname, firstName, occupation, gender, countryCode, areaCode, phoneNumber);
+
+            phonebook.Add(entry);
+
+            Console.Write("Do you want to enter another entry [Y/N]? ");
+        } while (Console.ReadLine().ToUpper() == "Y");
+
+        Console.WriteLine("\nPhonebook Entries:");
+        foreach (var entry in phonebook)
+        {
+            Console.WriteLine(entry.ToString());
+        }
+    }
+}
+
+class PhonebookEntry
+{
+    public string StudentNumber { get; }
+    public string Surname { get; }
+    public string FirstName { get; }
+    public string Occupation { get; }
+    public char Gender { get; }
+    public string CountryCode { get; }
+    public string AreaCode { get; }
+    public string PhoneNumber { get; }
+
+    public PhonebookEntry(string studentNumber, string surname, string firstName, string occupation, char gender, string countryCode, string areaCode, string phoneNumber)
+    {
+        StudentNumber = studentNumber;
+        Surname = surname;
+        FirstName = firstName;
+        Occupation = occupation;
+        Gender = gender;
+        CountryCode = countryCode;
+        AreaCode = areaCode;
+        PhoneNumber = phoneNumber;
+    }
+
+    public override string ToString()
+    {
+        return $"{StudentNumber}: {FirstName} {Surname}, {Occupation}, Gender: {Gender}, Phone: +{CountryCode}-{AreaCode}-{PhoneNumber}";
+    }
+}
